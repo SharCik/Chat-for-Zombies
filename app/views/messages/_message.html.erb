@@ -1,0 +1,13 @@
+ <li class="<%=  self_or_other(message) %>">
+  <div class="avatar">
+  	<% user = User.where(id: message.user_id) %>
+    <%=image_tag user.first.picture.thumb.url %>
+    
+  </div>
+  <div class="chatboxmessagecontent">
+    <p><%= message.body %></p>
+    <time datetime="<%= message.created_at %>" title="<%= message.created_at.strftime("%d %b  %Y at %I:%M%p") %>">
+      <%= message_interlocutor(message).name %> • <%= message.created_at.strftime("%H:%M %p") %>
+    </time>
+  </div>
+</li>

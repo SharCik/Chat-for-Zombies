@@ -1,0 +1,21 @@
+            <h3>All Dialogs</h3>
+            <div style="margin: 0;" class="container">
+              <div style="height: 100%; overflow-y: auto;">
+              <div class="panel panel-default">
+                <table class="table">
+                    <tbody>
+                      <% @conversations.each do |conversation| %>
+                      <% user = User.where(id: conversation.sender_id) %>
+                      <tr>
+                        <td><%= image_tag(user.first.picture.mini.url, class: "media-object pull-left") %></td>
+                        <td><%= link_to conversation_interlocutor(conversation).name, conversation_path(conversation), class: "conversation", "data-cid" => conversation.id  %></td>
+                        <td>
+                          <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45) %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  <% end %>
+                  </table>
+                </div>  
+              </div>
+            </div>

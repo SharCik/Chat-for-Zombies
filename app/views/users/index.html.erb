@@ -1,0 +1,217 @@
+
+<div class="container">  
+
+ <!-- Left screen -->
+
+  <div class="main col-md-3 col-lg-3 col-sm-3" >
+    <div class="left ava row">
+        <div id="ava_user"><%= image_tag @user.picture.thumb.url %></br>
+          <div id="name"><%= @user.name %></div>
+        </div>
+       
+    </div>
+    <div class="left profile row">
+      <div class="container">
+        <div style="height: 100%;" class="main col-md-3">
+          <table class="table">
+            <tbody>
+              <tr><%= button_to "", {controller: "users", action: "list_conversations"}, {remote: true, :id => "button_inbox"} %></tr>
+              <tr><%= button_to "", {controller: "users", action: "unread"}, {remote: true, :id => "button_inbox"} %></tr>
+              <tr><%= button_to "", {controller: "users", action: "delete_dialog"}, {remote: true, :id => "button_inbox"} %></tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="height: 100%;" class="main col-md-8">
+          <div id="inbox" class="inbox"></div>
+        </div>
+      </div>
+    </div>
+    <div class="left settings row">
+      <div class="container">
+        <div style="height: 100%;" class="main col-md-3">
+        </div>
+        <div style="height: 100%;" class="main col-md-8">
+          <div class="inbox"><%= link_to "Settings", profile_path %></div>
+          <div class="inbox"> <%= link_to "Go out!", destroy_user_session_path, method: :delete    %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Middle screen -->
+
+  <div class="main col-md-6">
+    <div class="chats container">
+      <div id="chaty1" class="main col-md-6"></div>
+      <div id="chaty2" class="main col-md-6"></div>
+    </div>
+  </div>
+
+ <!-- Rigth screen -->
+  <div class="main col-md-3 cl-lg-3 col-sm-3">
+    <div class="friends row">
+      
+      <div class="container">
+
+        <div style="height: 100%; overflow-y: auto;">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div style="text-align: center;" class="panel-heading">Friends</div>
+            <table class="table">
+              <tbody>
+                <% @favorites.each do |favorite| %>
+                <% friend = User.where(id: favorite.second_id) %>
+                <tr>
+                  <td><%= friend.name %>,<% friend.email %></td>
+                  <td>
+                    <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                                "data-sid" => current_user.id, "data-rip" => friend.id %>
+                  </td>
+                  <td><%= image_tag friend.picture.mini.url %></td>
+                </tr>
+            <% end %>
+
+            </tbody>
+          </table>
+        </div>
+
+        </div>
+
+    </div>
+  </div>
+    <div class="online row">
+  
+      <div class="container">
+
+  <div style="height: 100%; overflow-y: auto;">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div style="text-align: center;" class="panel-heading">Online</div>
+
+          <table class="table">
+          <% index = 0 %>
+            <tbody>
+            <% if user_online(@users) == [] %>
+              <tr>
+              <td></td>
+              <td>No users online.</td>
+              </tr>
+            <% else%>
+            <% user_online(@users).each do |user| %>
+                <tr>
+                  <td><%= index +=1 %></td>
+                  <td><%= user.name %></td>
+                  <td>
+                    <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                                "data-sid" => current_user.id, "data-rip" => user.id %>
+                  </td>
+                  <td><%= image_tag user.picture.mini.url %></td>
+                </tr>
+            <% end %>
+            <% end %> 
+
+            </tbody>
+          </table>
+        </div>
+
+        </div>
+
+    </div>
+  </div>
+    <div class="all row">
+      <div class="container">
+
+        <div style="height: 100%; overflow-y: auto;">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div style="text-align: center;" class="panel-heading">All Users</div>
+            <table class="table">
+              <tbody>
+              <% @users.each_with_index do |user, index| %>
+                <tr>
+                  <td><%= index +=1 %></td>
+                  <td><%= user.name %></td>
+                  <td>
+                    <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                                "data-sid" => current_user.id, "data-rip" => user.id %>
+                  </td>
+                  <%= form_tag(controller: "favorites", action: "add") do %>
+                  <td><%= link_to "Add", {:controller => "favorites", :action => "add", :user => user.id, :current_user => current_user.id }%></td>
+                  <% end %>
+                  <td><%= image_tag user.picture.mini.url %></td>
+                </tr>
+            <% end %>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+          <!-- Table -
+    <div style="height: 300px; overflow-y: auto;">
+      <div class="panel panel-default">
+        <!-- Default panel contents --
+        <div class="panel-heading">Registered Users</div>
+
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @users.each_with_index do |user, index| %>
+              <tr>
+                <td><%= index +=1 %></td>
+                <td><%= user.name %></td>
+                
+                <td>
+                  <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                              "data-sid" => current_user.id, "data-rip" => user.id %>
+                </td>
+                <td><%= image_tag user.picture.thumb.url %></td>
+              </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <hr>
+    <h3>Your Conversations</h3>
+
+    <div style="height: 400px; overflow-y: auto;">
+      <% if @conversations.any? %>
+          <ul class="media-list">
+              <% @conversations.each do |conversation| %>
+                <li class="media">
+                <% user = User.where(id: conversation.sender_id) %>
+                  <%= image_tag(user.first.picture.thumb.url, class: "media-object pull-left")  %>
+                  <div class="media-body">
+                         <h4 class="media-heading"><%= link_to conversation_interlocutor(conversation).name, conversation_path(conversation), class: "conversation", "data-cid" => conversation.id  %></h4>
+                        <p><%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45) %></p>
+                  </div>
+                </li>
+            <% end %>
+          </ul>
+      <% else %>
+          <p>You have no conversations. Click send message with any user to create one.</p>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
+
+  </div>
+
+</div>
