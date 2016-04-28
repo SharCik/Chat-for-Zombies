@@ -82,14 +82,21 @@ body{
 }
 
 .online{
-    height: 40%;
+    height: 30%;
 }
 
+.all{
+    height: 40%;
+}
 .settings{
     height: 20%;
 }
 .row{
     margin: 0px;
+}
+.panel{
+    margin-bottom: 2px;
+    padding-bottom: 0px;
 }
 
 #button_inbox{
