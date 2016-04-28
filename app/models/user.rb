@@ -8,9 +8,8 @@ class User < ActiveRecord::Base
 
          has_many :conversations, :foreign_key => :sender_id
          has_one :profile
-         has_many :favorites, class_name:  "favorites",
-                                  foreign_key: "second_id",
-                                  dependent:   :destroy
+         has_many :favorites
+         has_many :users, :source => :favorite, :through => :favorites
 
 
     mount_uploader :picture, PictureUploader

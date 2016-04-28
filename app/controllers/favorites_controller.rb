@@ -10,7 +10,11 @@ class FavoritesController < ApplicationController
 	end
 
 	def delete 
-
+		first_user = User.find(params[:current_user])
+		second_user = User.find(params[:user])
+		@favorite = Favorite.find_by(:first_id => first_user.id , :second_id => second_user.id) 
+		@favorite.destroy
+		redirect_to controller: "users", action: "index"
 	end
 
 end

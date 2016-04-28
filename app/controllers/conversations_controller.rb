@@ -23,8 +23,8 @@ class ConversationsController < ApplicationController
   end
 
   def destroy
-    conversations = Conversation.find(params[:conversations_ids])
-    Conversation.destroy(conversations)
+    conversation = Conversation.find_by(params[:conversations_id])
+    Conversation.destroy(conversation)
     redirect_to controller: "users", action: "index"
   end 
 

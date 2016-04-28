@@ -1,4 +1,4 @@
-var ready = function () {
+var initPage = function () {
 
     /**
      * When the send message link on our home page is clicked
@@ -67,8 +67,9 @@ var ready = function () {
 
 }
 
-$(document).ready(ready);
-$(document).on("page:load", ready);
-
-
-
+$(function() {
+  initPage();
+});
+$(window).bind('page:change', function() {
+  initPage();
+});

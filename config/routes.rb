@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   match '/inbox', to: 'users#list_conversations',       via: 'post' ,    defaults:{ format: 'js' }
   match '/unread', to: 'users#unread',       via: 'post' ,    defaults:{ format: 'js' }
   match '/delete', to: 'users#delete_dialog',       via: 'post' ,    defaults:{ format: 'js' }
-  match '/favarite', to: 'favorites#add',       via: 'get' 
+  match '/delete_selected', to: 'conversations#destroy',       via: 'post' ,    defaults:{ format: 'js' }
+  match '/favarite', to: 'favorites#add',       via: 'get'
+  match '/del_from_favarite', to: 'favorites#delete',       via: 'get' 
   authenticated :user do
     root 'users#index'
   end
@@ -26,11 +28,6 @@ Rails.application.routes.draw do
     resources :messages
   end
 
-  resources :conversations do
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
 
   
   # The priority is based upon order of creation: first created -> highest priority.

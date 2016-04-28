@@ -61,16 +61,21 @@
             <table class="table">
               <tbody>
                 <% @favorites.each do |favorite| %>
-                <% friend = User.where(id: favorite.second_id) %>
-                <tr>
-                  <td><%= friend.name %>,<% friend.email %></td>
-                  <td>
-                    <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                  <% friend = User.find(favorite.second_id) %>
+                  <tr>
+                    <td><%= friend.name %></td>
+                    <td>
+                      <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
                                 "data-sid" => current_user.id, "data-rip" => friend.id %>
-                  </td>
-                  <td><%= image_tag friend.picture.mini.url %></td>
-                </tr>
-            <% end %>
+                    </td>
+                  <%= form_tag(controller: "favorites", action: "delete") do %>
+                  <td><%= link_to "Del", {:controller => "favorites", :action => "delete", :user => friend.id, :current_user => current_user.id }%></td>
+                    <td><%= image_tag friend.picture.mini.url %></td>
+
+                  </tr>
+                <% end %>
+
+                <% end %>
 
             </tbody>
           </table>

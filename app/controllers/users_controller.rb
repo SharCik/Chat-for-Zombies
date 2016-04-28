@@ -19,8 +19,13 @@ class UsersController < ApplicationController
 
   def unread
     @users = User.where.not("id = ?",current_user.id).order("created_at DESC")
-    @messages = Message.where.not(("user_id = ? and read != ?"),current_user.id,nil)
+    @messages = Message.where(read: nil)
     @conversations = Conversation.involving(current_user).order("created_at DESC")
+    @conv = Array.new 
+    @messages.each do |message| 
+      @conv << message.conversation 
+    end 
+    @conv.uniq!
     respond_to do |format|
       format.js 
     end
@@ -34,12 +39,6 @@ class UsersController < ApplicationController
     end
   end 
 
-def destroy_multiple
-  Conversation.destroy(params[:conversations])
-    respond_to do |format|
-      format.html { redirect_to delete_path }
-    end
-end
 
   def show
   	@user = current_user
