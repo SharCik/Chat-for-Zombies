@@ -12,7 +12,7 @@
                         <td>
                           <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45) %>
                         </td>
-                        <td><%= button_to "", {:controller => "conversations", :action => "destroy", :conversation_id => conversation.id } ,{:id => "button_trash", :class => "del_conv btn-link"}%></td>
+                        <td><%= button_to "", {controller: "conversations", action: "destroy",  conversation_id: conversation.id, method: :delete } , {remote: true, :id => "button_trash", :class => "btn-link"}%></td>
                       </tr>
                     </tbody>
                   <% end %>

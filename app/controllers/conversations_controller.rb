@@ -25,7 +25,10 @@ class ConversationsController < ApplicationController
   def destroy
     conversation = Conversation.find_by(params[:conversations_id])
     Conversation.destroy(conversation)
-    redirect_to controller: "users", action: "index"
+    respond_to do |format|
+      format.html { redirect_to index_url , notice: 'Delete'}
+      format.js  
+    end
   end 
 
   private

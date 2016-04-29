@@ -8,9 +8,9 @@
                       <% user = User.where(id: conversation.sender_id) %>
                       <tr>
                         <td><%= image_tag(user.first.picture.mini.url, class: "media-object pull-left") %></td>
-                        <td><%= link_to conversation_interlocutor(conversation).name, conversation_path(conversation), class: "conversation", "data-cid" => conversation.id  %></td>
+                        <td><%= link_to conversation_interlocutor(conversation).name, conversation_path(conversation), class: "start-conversation", "data-cid" => conversation.id  %></td>
                         <td>
-                          <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45) %>
+                          <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 10) %>
                         </td>
                       </tr>
                     </tbody>
