@@ -6,5 +6,5 @@ test:
   secret_token: "secret"
 production:
   server: "https://chat-for-zombies.herokuapp.com/faye"
-  secret_token: 
+  secret_token: "3dc6d3f15c7caea1aa0742c369c37742098586298932958e224a5d936c48c097"
   signature_expiration: 3600 # one hour
