@@ -18,7 +18,4 @@ class User < ActiveRecord::Base
     where("last_seen > ?", 5.minutes.ago)
   end
 
-  validates_presence_of   :picture
-  validates_integrity_of  :picture
-  validates_processing_of :picture
 end
